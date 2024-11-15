@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <link rel="stylesheet" href="{% static 'styles.css' %}">
+   <title>Document</title>
+</head>
+
+<body>
+   <h1>Flight Tracker System</h1>
+   <div class="overview-container">
+      <div id="total-flights">
+         <div class="head">
+            <img src="{{ MEDIA_URL }}images/flight.png" alt="">
+            <h2>Total Flights</h2>
+         </div>
+         <h2 class="quantity">{{ flight_count }}</h2>
+      </div>
+      <div id="scheduled-flights">
+         <div class="head">
+            <img src="{{ MEDIA_URL }}images/departure.png" alt="">
+            <h2>Scheduled</h2>
+         </div>
+         <h2 class="quantity">{{ scheduled_flight_count }}</h2>
+      </div>
+      <div id="in-air-flights">
+         <div class="head">
+            <img src="{{ MEDIA_URL }}images/in-air.webp" id="in-air" alt="">
+            <h2>In Air</h2>
+         </div>
+         <h2 class="quantity">{{ in_air_flight_count }}</h2>
+      </div>
+      <div id="landed-flights">
+         <div class="head">
+            <img src="{{ MEDIA_URL }}images/landing.png" alt="">
+            <h2>Landed</h2>
+         </div>
+         <h2 class="quantity">{{ landed_flight_count }}</h2>
+      </div>
+   </div>
+   <button class="btn btn-primary mx-5 my-3" data-bs-toggle="modal" data-bs-target="#addFlightModal">
+      Add Flight
+   </button>
+   {% for flight in flights %}
+      <div class="flight-container">
+         <h4 class="dept-time">{{ flight.departure_time|date:"H:i" }}</h4>
+         <h4 class="flight-number">{{ flight.flight_number }}</h4>
+         <img src="{{ MEDIA_URL }}images/{{ flight.iata_code }}.png" width="250" class="airline-img" alt="">
+         <h4 class="destination">{{ flight.destination }}</h4>
+         <h4 class="duration">{{ flight.duration }}</h4>
+         <div class="status-container {{flight.status}}">
+            <span>{{flight.status}}</span>
+         </div>
+         <div class="button-container">
+            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFlightModal{{ flight.flight_number }}">
+               Edit
+            </button>
+            
+            <!-- Delete Button -->
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFlightModal{{ flight.flight_number}}">
+               Delete
+            </button>
+         </div>
+      </div>
+      <div class="modal fade" id="editFlightModal{{ flight.flight_number }}" tabindex="-1"
+         aria-labelledby="editFlightModalLabel{{ flight.flight_number }}" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="editFlightModalLabel{{ flight.flight_number }}">Edit Flight</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <form method="post" action="{% url 'edit_flight' flight.flight_number %}">
+                  {% csrf_token %}
+                  <div class="modal-body">
+                     {{ form.as_p }}
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      
+      <!-- Delete Flight Modal -->
+      <div class="modal fade" id="deleteFlightModal{{ flight.flight_number }}" tabindex="-1"
+         aria-labelledby="deleteFlightModalLabel{{ flight.flight_number }}" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="deleteFlightModalLabel{{ flight.flight_number }}">Delete Flight</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  Are you sure you want to delete flight <strong>{{ flight.flight_number }}</strong>?
+               </div>
+               <div class="modal-footer">
+                  <form method="post" action="{% url 'delete_flight' flight.flight_number %}">
+                     {% csrf_token %}
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                     <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   {% endfor %}
+   <div class="modal fade" id="addFlightModal" tabindex="-1" aria-labelledby="addFlightModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="addFlightModalLabel">Add Flight</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'add_flight' %}">
+               {% csrf_token %}
+               <div class="modal-body">
+                  {{ form.as_p }}
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add Flight</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

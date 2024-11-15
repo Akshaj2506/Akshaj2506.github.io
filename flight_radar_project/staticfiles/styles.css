@@ -1,0 +1,86 @@
+body {
+   background-color: #b3ebf2;
+}
+
+h1 {
+   text-align: center;
+   font-family: Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   margin-top: 20px;
+}
+
+.head h2 {
+   text-align: center;
+   font-size: 36px;
+}
+
+.head img {
+   height: 90px;
+   width: 90px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+.airline-img {
+   object-fit:scale-down;
+}
+#in-air {
+   filter: grayscale(100%);
+}
+.overview-container {
+   margin: 0 60px;
+   padding: 30px 0;
+   border-radius: 40px;
+   background-color: #96bae4;
+   display: flex;
+   justify-content: space-evenly;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   ;
+}
+
+.flight-container {
+   margin: 20px 60px;
+   padding: 30px 0;
+   border-radius: 40px;
+   background-color: #6c95c4;
+   align-items: center;
+   display: flex;
+   justify-content: space-evenly;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   ;
+}
+
+.overview-container * {
+   width: 100%;
+}
+
+.quantity {
+   font-size: 55px;
+   text-align: center;
+}
+.Completed {
+   background-color: #1987546c;
+   padding: 10px 20px;
+   border: 1px solid #198754;
+   font-size: 24px;
+   color: #0f5735;
+   border-radius: 10px;
+}
+.In {
+   background-color: #ffc10765;
+   padding: 10px 20px;
+   border: 1px solid #ffc107;
+   color: #775a05;
+   font-size: 24px;
+   border-radius: 10px;
+}
+.Scheduled {
+   background-color: #0d6dfd65;
+   padding: 10px 20px;
+   border: 1px solid #0d6efd;
+   color: #042658;
+   font-size: 24px;
+   border-radius: 10px;
+}
