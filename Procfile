@@ -1,0 +1,1 @@
+web: gunicorn flight-radar-project.wsgi
