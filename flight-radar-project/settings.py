@@ -28,7 +28,9 @@ SECRET_KEY = 'django-insecure-s948m1!i9hvy3jn=nzwh%0y#lm-=dd1a+n+-6(8lgvcyryw38i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+   "flight-radar-project-77d4126f529d.herokuapp.com"
+]
 
 
 # Application definition
