@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'flight_radar_project.urls'
+ROOT_URLCONF = 'flight-radar-project.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'flight_radar_project.wsgi.application'
+WSGI_APPLICATION = 'flight-radar-project.wsgi.application'
 
 
 # Database
